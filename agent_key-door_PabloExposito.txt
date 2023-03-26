@@ -1,0 +1,94 @@
+STEP 0:
+	at(agent, room1).
+	at(key1, room1).
+	at(key2, room2).
+	state(door1, closed).
+	state(key1, free).
+	state(key2, free).
+	opens(key1, door1).
+	connects(door1, room1, room2).
+	holds(agent, none).
+	
+STEP 1:
+	ASK:
+		grap_key(agent, key1) True
+		grap_key(agent, key2) False
+		move(agent, room1, room2) False
+		move(agent, room2, room1) False
+		get_open(agent, door1) False
+		get_open(agent, door2) False
+	ACTION:
+		grap_key(agent, key1)
+	TELL:
+		delete state(key1, free).
+		add holds(agent, key1).
+
+STEP 2:
+	ASK:
+		grap_key(agent, key1) False
+		grap_key(agent, key2) False
+		move(agent, room1, room2) False
+		move(agent, room2, room1) False
+		get_open(agent, door1) True
+		get_open(agent, door2) False
+	ACTION:
+		get_open(agent, door1)
+	TELL:
+		delete state(door1, closed).
+		add state(door1, open).
+
+STEP 3:
+	ASK:
+		grap_key(agent, key1) False
+		grap_key(agent, key2) False
+		move(agent, room1, room2) True
+		move(agent, room2, room1) False
+		get_open(agent, door1) False
+		get_open(agent, door2) False
+	ACTION:
+		move(agent, room1, room2)
+	TELL:
+		delete at(agent, room1).
+		add at(agent, room2).
+		delete at(key1, room1).
+		add at(key1, room2).
+		
+STEP 4:
+	ASK:
+		grap_key(agent, key1) False
+		grap_key(agent, key2) True
+		move(agent, room1, room2) False
+		move(agent, room2, room1) True
+		get_open(agent, door1) False
+		get_open(agent, door2) False
+	ACTION:
+		grap_key(agent, key2)
+		move(agent, room2, room1)
+	TELL:
+		delete at(agent, room2).
+		add at(agent, room1).
+		delete state(key2, free).
+		add holds(agent, key2).
+		
+STEP 5:
+	ASK:
+		grap_key(agent, key1) False
+		grap_key(agent, key2) False
+		move(agent, room1, room2) True
+		move(agent, room2, room1) False
+		get_open(agent, door1) False
+		get_open(agent, door2) False
+	ACTION:
+		move(agent, room1, room2)
+	TELL:
+		delete at(agent, room1).
+		add at(agent, room2).
+		
+		
+		A PARTIR DE ESTE PUNTO LA UNICA ACCION QUE 
+		PUEDE REALIZAR EL AGENTE ES MOVERSE DE UNA
+		HABITACIÓN A OTRA. YA QUE TIENE LAS LLAVES
+		Y, ADEMAS, LA PUERTA ESTA ABIERTA.
+		
+
+		
